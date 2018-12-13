@@ -11,6 +11,6 @@ public class DatabaseLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         //do some database work
-        System.out.println("Database Loader....");
+        //System.out.println("Database Loader....");
     }
 }
