@@ -30,9 +30,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                    // .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
+                    .usernameParameter("email")
                 .and()
-                    .csrf().disable()
-                    .headers().frameOptions().disable();
+                    .logout()
+                .and()
+                    .rememberMe();
+                   // .logoutUrl("/my/logout")
+                   // .logoutSuccessUrl("/my/index");
+                   // .logoutSuccessHandler(logoutSuccessHandler)
+                   // .invalidateHttpSession(true)
+                   // .addLogoutHandler(logoutHandler)
+                    //.deleteCookies(cookieNamesToClear);
+//                .and()
+//                    .csrf().disable()
+//                    .headers().frameOptions().disable();
                 //.and()
                 //.httpBasic();
     }
