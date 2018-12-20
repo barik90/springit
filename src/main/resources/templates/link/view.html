@@ -48,6 +48,18 @@
                 all 21 comments
             </div>
         </div>
+        <div class="row addcomment" sec:authorize="hasRole('ROLE_USER')">
+            <div class="col-1">&nbsp;</div>
+            <div class="col-11">
+                <form id="frmAddComment" method="POST" th:action="@{/link/comments}" th:object="${comment}">
+                    <input type="hidden" th:field="*{link}"/>
+                    <div class="form-group">
+                        <textarea class="form-control" id="comment" rows="3" th:field="*{body}"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Comment</button>
+                </form>
+            </div>
+        </div>
         <!-- single comment -->
         <div class="row comment" th:each="comment : ${link.getComments()}">
             <div class="col-1">&nbsp;</div>
