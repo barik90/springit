@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email); //optional zeby nie dawało błędu jak nie znajdzie
+
+    Optional<User> findByEmailAndActivationCode(String email, String activationCode);
 }
