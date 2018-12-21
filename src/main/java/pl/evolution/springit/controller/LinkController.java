@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.evolution.springit.domain.Comment;
 import pl.evolution.springit.domain.Link;
-import pl.evolution.springit.repository.CommentRepository;
-import pl.evolution.springit.repository.LinkRepository;
+import pl.evolution.springit.service.CommentService;
+import pl.evolution.springit.service.LinkService;
 
-import javax.jws.WebParam;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -24,23 +23,23 @@ public class LinkController {
 
     private static final Logger logger = LoggerFactory.getLogger(LinkController.class);
 
-    private LinkRepository linkRepository;
-    private CommentRepository commentRepository;
+    private LinkService linkService;
+    private CommentService commentService;
 
-    public LinkController(LinkRepository linkRepository, CommentRepository commentRepository) {
-        this.linkRepository = linkRepository;
-        this.commentRepository = commentRepository;
+    public LinkController(LinkService linkService, CommentService commentService) {
+        this.linkService = linkService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/")
     public String list(Model model){
-        model.addAttribute("links", linkRepository.findAll());
+        model.addAttribute("links", linkService.findAll());
         return "link/list";
     }
 
     @GetMapping("/link/{id}")
     public String read(@PathVariable Long id, Model model){
-        Optional<Link> link = linkRepository.findById(id);
+        Optional<Link> link = linkService.findById(id);
         if(link.isPresent()){
             Link currentLink = link.get();
             Comment comment = new Comment();
@@ -68,7 +67,7 @@ public class LinkController {
             return "link/submit";
         }else{
             //save a link
-            linkRepository.save(link);
+            linkService.save(link);
             logger.info("New link was saved successfully");
             redirectAttributes
                     .addAttribute("id", link.getId())
@@ -84,7 +83,7 @@ public class LinkController {
             logger.info("Something went wrong.");
         } else {
             logger.info("New Comment Saved!");
-            commentRepository.save(comment);
+            commentService.save(comment);
         }
         return "redirect:/link/" + comment.getLink().getId();
     }
