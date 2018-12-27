@@ -32,7 +32,7 @@ public class UserService {
 
     public User register(User user){
         //take the password from the form and encode
-        String secret = "{bcypt}" + encoder.encode(user.getPassword());
+        String secret = "{bcrypt}" + encoder.encode(user.getPassword());
         user.setPassword(secret);
 
         //confirm password
